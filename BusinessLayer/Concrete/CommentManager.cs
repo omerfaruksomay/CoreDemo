@@ -35,7 +35,7 @@ namespace BusinessLayer.Concrete
 
         public Comment GetCommentById(int id)
         {
-            throw new NotImplementedException();
+            return _commentDal.GetById(id);
         }
 
         public List<Comment> GetComments(int id)

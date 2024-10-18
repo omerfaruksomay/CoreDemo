@@ -8,9 +8,9 @@ namespace CoreDemo.ViewComponents.Blog
 	{
 		BlogManager bm = new BlogManager(new EfBlogRepository());
 
-		public IViewComponentResult Invoke() 
+		public IViewComponentResult Invoke(int id) 
 		{
-			var values = bm.GetBloglistByWriter(1);
+			var values = bm.GetBloglistByWriter(id);
 			return View(values); 
 		}
 

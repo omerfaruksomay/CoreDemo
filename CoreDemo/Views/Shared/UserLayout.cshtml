@@ -21,6 +21,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             window.scrollTo(0, 1);
         }
     </script>
+    <link href="~/CoreBlogTema/web/css/contact.css" rel='stylesheet' type='text/css' />
     <link href="~/CoreBlogTema/web/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="~/CoreBlogTema/web/css/single.css">
     <link href="~/CoreBlogTema/web/css/style.css" rel='stylesheet' type='text/css' />
@@ -36,11 +37,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="top-bar_sub_w3layouts container-fluid">
             <div class="row">
                 <div class="col-md-4 logo text-left">
-                    <a class="navbar-brand" href="index.html">
-                        <i class="fab fa-linode"></i> Weblog
+                    <a class="navbar-brand" href="/Blog/Index">
+                        <i class="fab fa-linode"></i> Core Blog
                     </a>
                 </div>
-                @await Html.PartialAsync("Partial2")
+                @await Html.PartialAsync("AuthButtons")
 
                 <div class="col-md-4 log-icons text-right">
 
@@ -72,7 +73,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
             </div>
         </div>
-        @await Html.PartialAsync("Partial1")
+        @await Html.PartialAsync("Navbar")
 
     </header>
     <!--//header-->
@@ -81,7 +82,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     @RenderBody()
     <!--//main-->
     <!--footer-->
-    @await Html.PartialAsync("Partial3")
+    @await Html.PartialAsync("Footer")
     <!---->
     <!-- js -->
     <script src="~/CoreBlogTema/web/js/jquery-2.2.3.min.js"></script>

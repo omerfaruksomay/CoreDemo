@@ -1,4 +1,5 @@
-﻿@model IEnumerable<EntityLayer.Concrete.Blog>
+﻿@using EntityLayer.Concrete
+@model Blog
 @{
     ViewData["Title"] = "BlogDetails";
     Layout = "~/Views/Shared/UserLayout.cshtml";
@@ -17,8 +18,7 @@
 			<div class="row">
 				<!--left-->
 				<div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
-				@foreach(var item in Model)
-				{
+			
 					<div class="blog-grid-top">
 						<div class="b-grid-top">
 							<div class="blog_info_left_grid">
@@ -30,7 +30,7 @@
 								<ul>
 									<li>
 										<a href="#">
-											<i class="far fa-calendar-alt"></i> @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))
+											<i class="far fa-calendar-alt"></i> @(((DateTime)Model.BlogCreateDate).ToString("dd-MMM-yyyy"))
 										</a>
 									</li>
 									<li class="mx-2">
@@ -49,17 +49,17 @@
 						</div>
 
 						<h3>
-							<a href="single.html">@item.BlogTitle </a>
+							<a href="single.html">@Model.BlogTitle </a>
 						</h3>
 						<p>
-							@item.BlogContent
+							@Model.BlogContent
 						</p>
 					</div>
-				}
+				
 				
 
-				@await Component.InvokeAsync("CommentListByBlog",new {id= ViewBag.Id})
-				@await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml")
+				@await Component.InvokeAsync("CommentListByBlog",Model.BlogID)
+				@await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml",Model.BlogID)
 
 					
 				</div>
@@ -71,12 +71,12 @@
 						<div class="tech-btm">
 							<img src="~/CoreBlogTema/web/images/banner1.jpg" class="img-fluid" alt="">
 						</div>
-						
+						<h4>Mail bültenine abone olun</h4>
 						@await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
 
 						@await Component.InvokeAsync("CategoryList")
 
-						@await Component.InvokeAsync("WriterLastBlog")
+						@await Component.InvokeAsync("WriterLastBlog", Model.WriterId)
 						<div class="single-gd my-5 tech-btm">
 							<h4>Our Progress</h4>
 							<div class="progress">

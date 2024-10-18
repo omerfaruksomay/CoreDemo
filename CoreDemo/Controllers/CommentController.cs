@@ -16,19 +16,20 @@ namespace CoreDemo.Controllers
 			return View();
 		}
 		[HttpGet]
-		public PartialViewResult PartialAddComment()
+		public PartialViewResult PartialAddComment(int id)
 		{
-			return PartialView();
+			
+			return PartialView(id);
 		}
 		[HttpPost]
-		public PartialViewResult PartialAddComment(Comment c)
+		public IActionResult PartialAddComment(Comment c,int id)
 		{
 			c.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
 			c.CommentStatus = true;
-			c.BlogID = 2;
+			c.BlogID = id;
 			cm.CommentAdd(c);
-			Response.Redirect("/Blog/Index/");
-			return PartialView();
+			return RedirectToAction("BlogReadAll","Blog",new { id = id });
+	
 		}
 
 		public PartialViewResult CommentListByBlog(int id)
