@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -15,6 +16,7 @@ namespace CoreDemo.Controllers
     public class BlogController : Controller
     {
         BlogManager bm = new BlogManager(new EfBlogRepository());
+        Context c = new Context();
 
         [AllowAnonymous]
         public IActionResult Index()
@@ -32,7 +34,9 @@ namespace CoreDemo.Controllers
 
         public IActionResult BlogListByWriter()
         {
-            var values = bm.GetBlogListWithCategoryByWriter(2);
+            var userMail = User.Identity.Name;
+            var writerID = c.Writers.Where(x=>x.WriterMail == userMail).Select(y=>y.WriterId).FirstOrDefault();
+            var values = bm.GetBlogListWithCategoryByWriter(writerID);
             return View(values);
         }
 
@@ -55,9 +59,11 @@ namespace CoreDemo.Controllers
         {
             BlogValidator validator = new BlogValidator();
             ValidationResult result = validator.Validate(blog);
+            var userMail = User.Identity.Name;
+            var writerID = c.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
             if (result.IsValid)
             {
-                blog.WriterId = 2;
+                blog.WriterId = writerID;
                 blog.BlogStatus = true;
                 blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                 bm.Add(blog);
@@ -99,7 +105,9 @@ namespace CoreDemo.Controllers
         [HttpPost]
         public IActionResult EditBlog(Blog blog)
         {
-            blog.WriterId = 2;
+            var userMail = User.Identity.Name;
+            var writerID = c.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
+            blog.WriterId = writerID;
             bm.Update(blog);
             return RedirectToAction("BlogListByWriter", "Blog");
         }
